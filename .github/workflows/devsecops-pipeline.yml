@@ -30,6 +30,6 @@ jobs:
 
       - name: Run Bandit SAST Scanner
         run: |
-          pip install bandit
+          pip install bandit pbr
           bandit -r app/ -f json -o bandit-report.json || true
           bandit -r app/ -ll
