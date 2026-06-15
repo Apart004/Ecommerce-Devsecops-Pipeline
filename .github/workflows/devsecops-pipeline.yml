@@ -27,3 +27,9 @@ jobs:
       - name: Run basic health check
         run: |
           python -c "from app import create_app; app = create_app(); print('App loaded successfully')"
+
+      - name: Run Bandit SAST Scanner
+        run: |
+          pip install bandit pbr
+          bandit -r app/ -f json -o bandit-report.json || true
+          bandit -r app/ -ll
