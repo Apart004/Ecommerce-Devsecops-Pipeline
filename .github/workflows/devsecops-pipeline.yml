@@ -33,3 +33,8 @@ jobs:
           pip install bandit pbr
           bandit -r app/ -f json -o bandit-report.json || true
           bandit -r app/ -ll --exit-zero=False
+
+      - name: Run Safety SCA Scanner
+        run: |
+          pip install safety==2.3.5
+          safety check -r requirements.txt --output text || true
