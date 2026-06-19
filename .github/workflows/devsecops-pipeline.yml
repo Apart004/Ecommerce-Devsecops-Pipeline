@@ -38,3 +38,16 @@ jobs:
         run: |
           pip install safety==2.3.5
           safety check -r requirements.txt --output text || true
+
+      - name: Build Docker image for scanning
+        run: |
+          docker build -t ecommerce-app:latest .
+
+      - name: Run Trivy Container Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'ecommerce-app:latest'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
