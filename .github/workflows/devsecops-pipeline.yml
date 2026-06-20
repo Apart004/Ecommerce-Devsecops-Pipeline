@@ -50,4 +50,5 @@ jobs:
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
+          trivyignores: '.trivyignore'
           severity: 'CRITICAL,HIGH'
