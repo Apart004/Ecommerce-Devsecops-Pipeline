@@ -1,0 +1,6 @@
+# Trivy ignore file
+# Accepted risks - unfixed vulnerabilities in base image
+
+# Python 3.11-slim base image low severity unfixed CVEs
+# These are accepted as no fix is currently available
+CVE-2023-4039
