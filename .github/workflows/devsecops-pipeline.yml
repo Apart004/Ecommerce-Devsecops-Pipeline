@@ -28,16 +28,50 @@ jobs:
         run: |
           python -c "from app import create_app; app = create_app(); print('App loaded successfully')"
 
+  sast-scan:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
       - name: Run Bandit SAST Scanner
         run: |
           pip install bandit pbr
           bandit -r app/ -f json -o bandit-report.json || true
           bandit -r app/ -ll
 
+  sca-scan:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
       - name: Run Safety SCA Scanner
         run: |
           pip install safety==2.3.5
           safety check -r requirements.txt --output text || true
+
+  container-scan:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Build Docker image for scanning
         run: |
