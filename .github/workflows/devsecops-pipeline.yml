@@ -63,7 +63,7 @@ jobs:
       - name: Run Safety SCA Scanner
         run: |
           pip install safety==2.3.5
-          safety check -r requirements.txt --output text || true
+          safety check -r requirements.txt --output text
 
   container-scan:
     runs-on: ubuntu-latest
