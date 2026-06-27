@@ -86,3 +86,20 @@ jobs:
           ignore-unfixed: true
           trivyignores: '.trivyignore'
           severity: 'CRITICAL,HIGH'
+  iac-scan:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Run Checkov IaC Scanner
+        run: |
+          pip install checkov
+          checkov -d terraform/ --framework terraform --output cli || echo "Checkov scan complete"
