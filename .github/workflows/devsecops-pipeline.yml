@@ -183,6 +183,7 @@ jobs:
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
           fail_action: false
+          artifact_name: 'false'  # <--- THIS STOPS THE INTERNAL UPLOAD ERROR COMPLETELY
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v4
