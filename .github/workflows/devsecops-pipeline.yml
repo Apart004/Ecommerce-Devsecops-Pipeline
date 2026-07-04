@@ -174,14 +174,13 @@ jobs:
           python run.py &
           sleep 5
 
-      - name: Install ZAP and run scan
+      - name: Run OWASP ZAP DAST Scan
         run: |
-          pip install python-owasp-zap-v2.4 requests
-          curl -s http://localhost:5000 > /dev/null
-          echo "Flask app is running"
-          wget https://github.com/zaproxy/zaproxy/releases/download/v2.14.0/ZAP_2.14.0_Linux.tar.gz
-          tar -xf ZAP_2.14.0_Linux.tar.gz
-          ZAP_2.14.0/zap.sh -cmd -quickurl http://localhost:5000 -quickout zap-report.html -quickprogress || true
+          docker pull ghcr.io/zaproxy/zaproxy:stable
+          docker run -v $(pwd):/zap/wrk:rw --network="host" \
+            ghcr.io/zaproxy/zaproxy:stable \
+            zap-baseline.py -t http://localhost:5000 \
+            -r zap-report.html -I || true
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v4
