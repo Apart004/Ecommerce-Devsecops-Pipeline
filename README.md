@@ -1,343 +1,227 @@
-# 🛒 E-Commerce Enterprise DevSecOps Pipeline
+# 🛡️ E-Commerce Enterprise IaC DevSecOps Pipeline
 
-> An enterprise-grade DevSecOps pipeline for a Flask-based E-Commerce application that automates security testing across the Software Development Life Cycle (SDLC).
+![Pipeline](https://github.com/Apart004/Ecommerce-Devsecops-Pipeline/actions/workflows/devsecops-pipeline.yml/badge.svg)
 
-![Python](https://img.shields.io/badge/Python-3.14-blue)
-![Flask](https://img.shields.io/badge/Flask-Web_App-black)
-![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED)
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF)
-![Bandit](https://img.shields.io/badge/Bandit-SAST-red)
-![Safety](https://img.shields.io/badge/Safety-SCA-yellow)
-![Trivy](https://img.shields.io/badge/Trivy-Container_Security-blue)
-![Terraform](https://img.shields.io/badge/Terraform-IaC-623CE4)
-![Checkov](https://img.shields.io/badge/Checkov-IaC_Security-green)
+A fully automated, enterprise-grade DevSecOps pipeline built for an e-commerce application. This project integrates multiple security scanning layers — SAST, SCA, Container Scanning, IaC Scanning, and DAST — into a CI/CD pipeline that acts as a strict security gate on every code commit.
 
 ---
 
-# 📖 Project Overview
+## 🎯 Project Overview
 
-Modern software development requires security to be integrated into every phase of the development lifecycle instead of performing security testing only after deployment.
-
-This project demonstrates a complete **DevSecOps CI/CD pipeline** for a Flask-based E-Commerce application by integrating multiple automated security tools that continuously validate:
-
-- Source Code Security
-- Dependency Security
-- Container Security
-- Infrastructure as Code (IaC) Security
-
-The pipeline automatically scans every code change before it can be merged, helping developers identify and fix security issues early.
+| Property | Details |
+|----------|---------|
+| **Domain** | E-Commerce Security |
+| **Organization** | Infotact Solutions & Co. |
+| **Duration** | 20 Days |
+| **Pipeline** | GitHub Actions |
+| **Architecture** | Multi-layer DevSecOps |
 
 ---
 
-# 🎯 Project Objectives
-
-- Build an automated DevSecOps pipeline
-- Containerize a Flask application using Docker
-- Automate CI/CD using GitHub Actions
-- Detect insecure Python code using Bandit
-- Detect vulnerable dependencies using Safety
-- Scan Docker images using Trivy
-- Secure Terraform infrastructure using Checkov
-- Follow enterprise Git workflow using feature branches and Pull Requests
-
----
-
-# 🏗️ Project Architecture
+## 🏗️ Architecture
 
 ```
-                Developer
+Code Commit → GitHub Actions Pipeline
                     │
-                    │ Push Code
-                    ▼
-             GitHub Repository
+                    ├── 🔨 Build & Test
+                    │       └── Flask app health check
                     │
-                    ▼
-          GitHub Actions Pipeline
+                    ├── 🔍 SAST Scan (Bandit)
+                    │       └── Static code analysis
                     │
-      ┌─────────────┼──────────────┐
-      │             │              │
-      ▼             ▼              ▼
-
-   Build/Test     Bandit         Safety
-      │             │              │
-      └─────────────┼──────────────┘
+                    ├── 📦 SCA Scan (Safety)
+                    │       └── Dependency vulnerability scan
                     │
-                    ▼
-                 Trivy
+                    ├── 🐳 Container Scan (Trivy)
+                    │       └── Docker image CVE scan
                     │
-                    ▼
-               Terraform
+                    ├── 🏗️ IaC Scan (Checkov + Terraform)
+                    │       └── Infrastructure misconfiguration scan
                     │
-                    ▼
-                Checkov
-                    │
-                    ▼
-            Pipeline Result
+                    └── 🕷️ DAST Scan (OWASP ZAP)
+                            └── Runtime vulnerability scan
 ```
 
 ---
 
-# ⚙️ Technology Stack
+## 🔧 Tech Stack
 
-| Category | Technology |
-|-----------|------------|
-| Language | Python 3.14 |
-| Framework | Flask |
-| Containerization | Docker |
-| Version Control | Git |
-| Repository | GitHub |
-| CI/CD | GitHub Actions |
-| SAST | Bandit |
-| SCA | Safety |
-| Container Security | Trivy |
-| IaC | Terraform |
-| IaC Security | Checkov |
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Application** | Python Flask | Sample e-commerce REST API |
+| **Containerization** | Docker | Application packaging |
+| **CI/CD** | GitHub Actions | Pipeline orchestration |
+| **SAST** | Bandit | Static code security analysis |
+| **SCA** | Safety | Dependency vulnerability scanning |
+| **Container Security** | Trivy | Docker image CVE scanning |
+| **IaC** | Terraform | AWS infrastructure as code |
+| **IaC Security** | Checkov | Terraform misconfiguration scanning |
+| **DAST** | OWASP ZAP | Dynamic runtime security testing |
 
 ---
 
-# 📂 Project Structure
+## 📁 Project Structure
 
 ```
-Ecommerce-Devsecops-Pipeline
-│
+Ecommerce-Devsecops-Pipeline/
 ├── app/
-│   ├── __init__.py
-│   └── routes.py
-│
+│   ├── __init__.py          # Flask app factory
+│   └── routes.py            # API endpoints
 ├── terraform/
-│   ├── main.tf
-│   ├── variables.tf
-│   └── outputs.tf
-│
+│   ├── main.tf              # AWS infrastructure
+│   ├── variables.tf         # Input variables
+│   └── outputs.tf           # Output values
 ├── .github/
 │   └── workflows/
-│       └── devsecops-pipeline.yml
-│
-├── Dockerfile
-├── requirements.txt
-├── run.py
-└── README.md
+│       └── devsecops-pipeline.yml  # CI/CD pipeline
+├── .zap/
+│   └── rules.tsv            # ZAP scan rules
+├── Dockerfile               # Container definition
+├── .dockerignore            # Docker ignore rules
+├── .trivyignore             # Trivy ignore rules
+├── requirements.txt         # Python dependencies
+└── run.py                   # Application entry point
 ```
 
 ---
 
-# 🚀 DevSecOps Pipeline
+## 🚀 Pipeline Stages
 
-Every push or Pull Request automatically executes the following security pipeline.
+### 1. 🔨 Build & Test
+- Sets up Python 3.11 environment
+- Installs all dependencies
+- Runs Flask app health check
 
-| Stage | Tool | Purpose |
-|---------|------|---------|
-| Build | Python | Build & Validate Application |
-| Test | Flask | Verify Application Startup |
-| SAST | Bandit | Detect insecure Python code |
-| SCA | Safety | Detect vulnerable Python packages |
-| Container Scan | Trivy | Scan Docker image for vulnerabilities |
-| IaC Validation | Terraform | Validate Infrastructure Code |
-| IaC Scan | Checkov | Detect Terraform misconfigurations |
+### 2. 🔍 SAST — Bandit
+- Scans Python source code for security vulnerabilities
+- Detects hardcoded secrets, dangerous functions, injection risks
+- Generates `bandit-report.json` artifact
 
----
+### 3. 📦 SCA — Safety
+- Scans `requirements.txt` for known CVEs
+- Checks all dependencies against vulnerability database
+- Generates `safety-report.json` artifact
 
-# 🔐 Security Tools Used
+### 4. 🐳 Container Scan — Trivy
+- Builds Docker image and scans for CRITICAL/HIGH CVEs
+- Checks OS packages and application dependencies inside container
+- Generates `trivy-report.json` artifact
 
-## 1️⃣ Bandit (SAST)
+### 5. 🏗️ IaC Scan — Checkov + Terraform
+- Validates Terraform syntax with `terraform validate`
+- Scans Terraform scripts for cloud misconfigurations
+- Detects open ports, unencrypted storage, missing logging
+- Generates `checkov-report.json` artifact
 
-Bandit performs Static Application Security Testing by analyzing Python source code without executing it.
-
-Detects:
-
-- Hardcoded passwords
-- Use of eval()
-- Weak cryptography
-- Insecure functions
-
----
-
-## 2️⃣ Safety (SCA)
-
-Safety scans Python dependencies against known CVEs.
-
-Detects:
-
-- Vulnerable packages
-- Outdated libraries
-- Dependency risks
+### 6. 🕷️ DAST — OWASP ZAP
+- Starts Flask app inside pipeline
+- Runs ZAP baseline scan against live application
+- Tests for XSS, missing security headers, injection vulnerabilities
+- Generates `zap-report.html` artifact
 
 ---
 
-## 3️⃣ Trivy
+## 🏆 Security Milestones
 
-Trivy scans Docker images.
+### Milestone 1 — SAST Gate (Day 5)
+Pipeline **automatically failed** when Bandit detected:
+- Hardcoded passwords (`SECRET_PASSWORD = "admin123"`)
+- Use of `eval()` function (code injection risk)
+- Command injection via `subprocess shell=True`
 
-Checks:
+### Milestone 2 — SCA Gate (Day 10)
+Pipeline **automatically failed** when Safety detected:
+- `requests==2.18.0` with known CVEs
+- Vulnerability ID confirmed and remediated by upgrading to `requests>=2.32.2`
 
-- OS vulnerabilities
-- Package vulnerabilities
-- Secret detection
-- Misconfigurations
-
----
-
-## 4️⃣ Terraform
-
-Infrastructure is managed as code using Terraform.
-
-Resources include:
-
-- AWS VPC
-- Public Subnet
-- Security Groups
-- S3 Bucket
-- Flow Logs
-- Encryption
-- Access Logging
+### Milestone 3 — IaC Gate (Day 15)
+Pipeline **automatically detected** when Checkov found:
+- `CKV_AWS_24` — SSH port 22 open to `0.0.0.0/0`
+- Security group misconfiguration immediately caught and remediated
 
 ---
 
-## 5️⃣ Checkov
+## 🏛️ Infrastructure (Terraform)
 
-Checkov validates Terraform configuration before deployment.
-
-Detects:
-
-- Open Security Groups
-- Missing Encryption
-- Missing Logging
-- Public Resource Exposure
-- Security Misconfigurations
+AWS resources defined as code:
+- **VPC** with DNS support and flow logs
+- **Public Subnet** with secure configuration
+- **Security Group** — HTTP/HTTPS only (no open SSH)
+- **S3 Bucket** — encrypted, versioned, access logging enabled
+- **CloudWatch** — VPC flow log retention
+- **IAM Role** — least privilege for flow logs
 
 ---
 
-# 🧪 Milestones Completed
+## 🔒 Security Best Practices Followed
 
-## ✅ Week 1
-
-✔ Repository Setup
-
-✔ Flask Application
-
-✔ Docker Containerization
-
-✔ GitHub Actions
-
-✔ Bandit Integration
-
-✔ SAST Pipeline Validation
+- ✅ No hardcoded secrets — GitHub Secrets used
+- ✅ No direct commits to `main` — feature branches only
+- ✅ Squash merges for clean history
+- ✅ Semantic commit messages (`feat:`, `fix:`, `ci:`, `docs:`)
+- ✅ Daily commits — continuous contribution history
+- ✅ All scan reports saved as downloadable artifacts
 
 ---
 
-## ✅ Week 2
+## 📊 Pipeline Artifacts
 
-✔ Safety Integration
+Every pipeline run generates downloadable security reports:
 
-✔ Trivy Integration
-
-✔ Dependency Scanning
-
-✔ Container Scanning
-
-✔ Combined Security Pipeline
-
-✔ Vulnerable Package Detection Test
+| Artifact | Scanner | Format |
+|----------|---------|--------|
+| `bandit-sast-report` | Bandit | JSON |
+| `safety-sca-report` | Safety | JSON |
+| `trivy-container-report` | Trivy | JSON |
+| `checkov-iac-report` | Checkov | JSON |
+| `zap-dast-report` | OWASP ZAP | HTML |
 
 ---
 
-## ✅ Week 3 (Day 15)
+## 🏃 How to Run Locally
 
-✔ Terraform Infrastructure
+### Prerequisites
+- Python 3.11+
+- Docker Desktop
+- Git
 
-✔ Terraform Validation
-
-✔ Checkov Integration
-
-✔ Infrastructure Security Scanning
-
-✔ Milestone Test:
-
-Intentionally opened SSH Port **22** to **0.0.0.0/0**
-
-Result:
-
-✅ Checkov detected the security issue
-
-✅ Pipeline failed successfully
-
-This validated that insecure Infrastructure as Code cannot be merged into the main branch.
-
----
-
-# 🔄 Git Workflow
-
-The project follows enterprise Git workflow.
-
-```
-Feature Branch
-      │
-      ▼
-Commit Changes
-      │
-      ▼
-Push Branch
-      │
-      ▼
-Pull Request
-      │
-      ▼
-Code Review
-      │
-      ▼
-Squash Merge
-      │
-      ▼
-Main Branch
+### Run Flask App
+```bash
+git clone https://github.com/Apart004/Ecommerce-Devsecops-Pipeline.git
+cd Ecommerce-Devsecops-Pipeline
+pip install -r requirements.txt
+python run.py
 ```
 
-No direct commits are made to the main branch.
+### Run with Docker
+```bash
+docker build -t ecommerce-app:latest .
+docker run -p 5000:5000 ecommerce-app:latest
+```
+
+### API Endpoints
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Welcome message |
+| `/products` | GET | List all products |
+| `/health` | GET | Health check |
 
 ---
 
-# 📈 Current Progress
+## 📅 20-Day Development Timeline
 
-| Week | Status |
-|--------|--------|
-| Week 1 | ✅ Completed |
-| Week 2 | ✅ Completed |
-| Week 3 (up to Day 15) | ✅ Completed |
-| OWASP ZAP | ⏳ Upcoming |
-| Scan Artifacts | ⏳ Upcoming |
-| Documentation | ⏳ Upcoming |
+| Week | Days | Focus | Status |
+|------|------|-------|--------|
+| Week 1 | 1-5 | Containerization & SAST | ✅ |
+| Week 2 | 6-10 | Dependency & Container Scanning | ✅ |
+| Week 3 | 11-15 | IaC Scanning | ✅ |
+| Week 4 | 16-20 | DAST & Submission | ✅ |
 
 ---
 
-# 💡 Key Learning Outcomes
-
-- DevSecOps Fundamentals
-- Secure CI/CD Pipelines
-- Docker Containerization
-- Static Application Security Testing
-- Software Composition Analysis
-- Container Security
-- Infrastructure as Code
-- Infrastructure Security Scanning
-- Enterprise Git Workflow
-- Secure Development Lifecycle
-
----
-
-# 📌 Future Enhancements
-
-- OWASP ZAP Dynamic Security Testing
-- Automated HTML Security Reports
-- Pipeline Artifact Storage
-- Production Deployment
-- Slack / Email Notifications
-- Security Dashboard
-
----
-
-# 👨‍💻 Author
+## 👤 Author
 
 **Ansh Jagdhari**
-
-Cybersecurity Intern
-
-GitHub: https://github.com/Apart004
+Cybersecurity Intern — Infotact Solutions & Co.
+GitHub: [@Apart004](https://github.com/Apart004)
+```
