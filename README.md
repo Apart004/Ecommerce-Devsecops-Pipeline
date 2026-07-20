@@ -221,7 +221,7 @@ docker run -p 5000:5000 ecommerce-app:latest
 
 ## 👤 Author
 
-**Ansh Jagdhari**
+**Ansh Jagdhari**'
 Cybersecurity Intern — Infotact Solutions & Co.
 GitHub: [@Apart004](https://github.com/Apart004)
 ```
