@@ -2,6 +2,7 @@
 
 > An enterprise-grade DevSecOps pipeline for a Flask-based E-Commerce application that automates security testing across the Software Development Life Cycle (SDLC).
 
+![Pipeline](https://github.com/Apart004/Ecommerce-Devsecops-Pipeline/actions/workflows/devsecops-pipeline.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.14-blue)
 ![Flask](https://img.shields.io/badge/Flask-Web_App-black)
 ![Docker](https://img.shields.io/badge/Docker-Containerization-2496ED)
